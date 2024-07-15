@@ -163,3 +163,4 @@ cython_debug/
 
 # Dados do DataSUS
 data/dbc/*
+data/csv/*
