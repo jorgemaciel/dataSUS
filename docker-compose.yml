@@ -1,3 +1,18 @@
+x-airflow-common: &airflow-common
+  build:
+    context: .
+    dockerfile: Dockerfile
+  env_file:
+    - airflow.env
+  volumes:
+    - ./jobs:/opt/airflow/jobs
+    - ./dags:/opt/airflow/dags
+    - ./logs:/opt/airflow/logs
+  depends_on:
+    - postgres
+  networks:
+    - lake
+
 services:
 
   minio:
@@ -22,12 +37,34 @@ services:
       sleep 5;
       /usr/bin/mc config --quiet host add dmlminio http://minio:9000 minioadmin minioadmin;
       /usr/bin/mc mb --quiet dmlminio/raw;
+      /usr/bin/mc mb --quiet dmlminio/bronze;
       /usr/bin/mc admin service restart dmlminio;
       "
     depends_on:
       - minio
     networks:
       - lake
+
+  postgres:
+    image: postgres:14.0
+    environment:
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_DB=airflow
+    networks:
+      - lake
+
+  webserver:
+    <<: *airflow-common
+    command: webserver
+    ports:
+      - "8080:8080"
+    depends_on:
+      - scheduler
+
+  scheduler:
+    <<: *airflow-common
+    command: bash -c "airflow db migrate && airflow users create --username admin --firstname Jorge --lastname Maciel --role Admin --email jorge.maciel.jr@gmail.com --password admin && airflow scheduler"
 
 networks:
   lake:
