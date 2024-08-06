@@ -9,6 +9,7 @@ RUN apt-get update && \
 ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-arm64
 
 ADD pysus /home/airflow/pysus
+ADD datasus/ingest.py /home/airflow/pysus 
 
 WORKDIR /home/airflow/pysus
 
