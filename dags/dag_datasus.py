@@ -10,8 +10,8 @@ import os
 
 # Configuration for MinIO
 MINIO_ENDPOINT = "minio:9000"  # Replace with your MinIO endpoint
-MINIO_ACCESS_KEY = "jdebL7uRvLzTS4I1KiVa"  # Replace with your MinIO access key
-MINIO_SECRET_KEY = "y8NQdefJkJR04InduSsh3fEnWOTg2xwHxO05vOR6"  # Replace with your MinIO secret key
+MINIO_ACCESS_KEY = "minioadmin"  # Replace with your MinIO access key
+MINIO_SECRET_KEY = "minioadmin"  # Replace with your MinIO secret key
 MINIO_BUCKET_NAME = "raw"  # Replace with your MinIO bucket name
 MINIO_DATA_SUS_FOLDER = "datasus/dbc"  # Folder within the bucket for DataSUS files
 
