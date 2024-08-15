@@ -63,8 +63,8 @@ services:
     depends_on:
       - spark-master
     environment:
-      - SPARK_WORKER_CORES=4
-      - SPARK_WORKER_MEMORY=4G
+      - SPARK_WORKER_CORES=2
+      - SPARK_WORKER_MEMORY=1G
       - SPARK_WORKLOAD=worker
     networks:
       - lake
